@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+
+<html>
+	<head>
+		<script src="three.min.js"></script>
+		<script src="human.js"></script>
+	</head>
+	
+	<body>
+		<h1>"Фитнес тренировка"<br><small>ф.н. 81240 &ndash; група 2 &ndash; Юлиян Лазаров</small></h1>
+
+		<script>
+			// нагласяване на цвета и центрирането на текста с имената ви
+			document.getElementsByTagName('h1')[0].style = 'color:white; text-align:center; font-size:1.75em';
+			
+			// рисувателно поле на цял екран
+			renderer = new THREE.WebGLRenderer({antialias:true});
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			document.body.appendChild( renderer.domElement );
+			renderer.domElement.style = 'width:100%; height:100%; position:fixed; top:0; left:0; z-index:-1;';
+			
+			// сцена и камера
+			scene = new THREE.Scene();
+			camera = new THREE.PerspectiveCamera( 30, window.innerWidth/window.innerHeight, 0.1, 2000 );
+			camera.position.set(0,3,150);
+
+			// светлини
+			var light = new THREE.DirectionalLight('lightblue',0.8);
+			light.position.set(0,1,4);
+			scene.add(light);
+			scene.add( new THREE.AmbientLight('white',0.4) );
+			
+			// функция за анимиране на сцената
+			var t = 0; // време
+			function drawFrame()
+			{
+				requestAnimationFrame( drawFrame );
+				if (animate) animate(t++);
+				renderer.render( scene, camera );
+			}			
+			
+			// човече
+			манекен = мъжествен();
+			жена = женствен();
+			// тук се описват статичните елементи на позата
+			манекен.position.set(-25,0,0);
+			жена.position.set(32,0,0);
+			
+			//манекена стои прав и загравя ръцете 
+			
+			манекен.таз.врът(0,0,0);
+		
+			//жената ще тренира корем
+						
+			жена.rotation.z = 1.5;
+			жена.д_ръка.врът(0,0,-120);
+			жена.л_ръка.врът(0,0,-120);
+			жена.д_лакът.врът(0,0,-120);
+			жена.л_лакът.врът(0,0,-120);
+			жена.д_китка.врът(40,90,-20);
+			жена.л_китка.врът(40,90,-20);
+			жена.д_крак.врът(0,0,-15);
+			жена.л_крак.врът(0,0,-15);
+			жена.д_коляно.врът(0,0,100);
+			жена.л_коляно.врът(0,0,100);
+			
+				
+			colors[4] = 'magenta';
+			var стол = формаКрайник([16,10,16,0,270,1,0.2,0.001]);
+			стол.position.set(30,-10,0);
+			scene.add(стол);
+			
+			// анимация на човечето
+			animate = function (t)
+			{
+			scene.rotateY(0.003);
+				// тук се описват динамичните елементи на позата
+				// като променливата t е номер на кадър, като се
+				// очаква 1 секунда да е приблизително 60 кадъра
+				
+				//за мъжа действието:
+				
+				манекен.л_ръка.врът(15,50,20*sin(5*t));
+				манекен.д_ръка.врът(-15,-50,20*sin(5*t));
+				
+				//за жената действието:
+				
+				жена.тяло.врът(0,0,20*sin(5*t) );
+			}
+
+			drawFrame();
+		</script>
+	</body>
+</html>
